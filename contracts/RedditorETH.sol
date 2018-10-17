@@ -11,6 +11,7 @@ contract RedditorETH is Ownable {
     /* --- FIELDS --- */
 
     mapping (address => uint) public investors;
+    uint public totalAmount;
 
     /* --- CONSTRUCTOR --- */
 
@@ -19,6 +20,14 @@ contract RedditorETH is Ownable {
     }
 
     /* --- PUBLIC / EXTERNAL METHODS --- */
+
+    function announce(uint amount) external { 
+        require(msg.sender.balance >= amount, "You don't have enough ETH.");
+        totalAmount += amount - investors[msg.sender];
+        investors[msg.sender] = amount; 
+
+        emit InvestorStatement(msg.sender, amount);
+    }
 
     function getInvestorAmount(address investor) view public returns(uint) {
         return investors[investor];

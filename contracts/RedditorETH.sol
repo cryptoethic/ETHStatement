@@ -26,7 +26,7 @@ contract RedditorETH is Ownable {
 
     /* --- PUBLIC / EXTERNAL METHODS --- */
 
-    function announce(uint amount, string email) public { 
+    function declare(uint amount, string email) public { 
         require(msg.sender.balance >= amount, "You don't have enough ETH.");
         totalAmount += amount - investors[msg.sender].amount;
         investors[msg.sender].amount = amount; 
@@ -35,9 +35,8 @@ contract RedditorETH is Ownable {
         emit InvestorStatement(msg.sender, amount, email);
     }
 
-    function announce(uint amount) public { 
-        
-        return announce(amount, "");
+    function declare(uint amount) public { 
+        return declare(amount, "");
     }
 
     function getInvestorStatement(address investor) view public returns(uint, string) {

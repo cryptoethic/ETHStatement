@@ -37,33 +37,33 @@ describe('RedditorETH Contract', () => {
   });
 
   it('investor can define amount he wills to invest', async () => {
-    const receipt = await contract.methods.announce(oneETH).send({from:firstInvestor}); 
+    const receipt = await contract.methods.declare(oneETH).send({from:firstInvestor}); 
     expect(receipt.events).to.have.all.keys('InvestorStatement');
   });
 
   it('investor cannot define more ETH than he posses', async() => {
     const tooMuchETH = web3.utils.toWei('90000001', 'ether');
-    await expectThrow(contract.methods.announce(tooMuchETH).send({from: firstInvestor}));
+    await expectThrow(contract.methods.declare(tooMuchETH).send({from: firstInvestor}));
   });
 
 
   it('total amount should be set appropriately ', async() => {
     expect(await getTotalAmount()).to.be.eq.BN(0);
-    await contract.methods.announce(oneETH).send({from: firstInvestor}); 
+    await contract.methods.declare(oneETH).send({from: firstInvestor}); 
     expect(await getTotalAmount()).to.be.eq.BN(oneETH); 
-    await contract.methods.announce(twoETH).send({from: firstInvestor}); 
+    await contract.methods.declare(twoETH).send({from: firstInvestor}); 
     expect(await getTotalAmount()).to.be.eq.BN(twoETH); 
-    await contract.methods.announce(oneETH).send({from: secondInvestor}); 
+    await contract.methods.declare(oneETH).send({from: secondInvestor}); 
     expect(await getTotalAmount()).to.be.eq.BN(threeETH); 
   });
 
-  it('investor can leave email address while announcing his ETH amount to invest', async () => {
-    const receipt = await contract.methods.announce(oneETH, emailAddress).send({from:firstInvestor}); 
+  it('investor can leave email address while declaring his ETH amount to invest', async () => {
+    const receipt = await contract.methods.declare(oneETH, emailAddress).send({from:firstInvestor}); 
     expect(receipt.events.InvestorStatement.returnValues.email).to.be.equal(emailAddress);
   });
 
-  it('we can get investor announced amount and email', async () => {
-    await contract.methods.announce(oneETH, emailAddress).send({from:firstInvestor});  
+  it('we can get investor declared amount and email', async () => {
+    await contract.methods.declare(oneETH, emailAddress).send({from:firstInvestor});  
     
     const statement = await contract.methods.getInvestorStatement(firstInvestor).call();
 

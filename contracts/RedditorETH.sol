@@ -6,11 +6,16 @@ contract RedditorETH is Ownable {
 
     /* --- EVENTS --- */
 
-    event InvestorStatement(address indexed investor, uint amount);
+    event InvestorStatement(address indexed investor, uint amount, string email);
 
     /* --- FIELDS --- */
 
-    mapping (address => uint) public investors;
+    struct Investor {
+        uint amount;
+        string email;
+    }
+
+    mapping (address => Investor) public investors;
     uint public totalAmount;
 
     /* --- CONSTRUCTOR --- */
@@ -21,16 +26,22 @@ contract RedditorETH is Ownable {
 
     /* --- PUBLIC / EXTERNAL METHODS --- */
 
-    function announce(uint amount) external { 
+    function announce(uint amount, string email) public { 
         require(msg.sender.balance >= amount, "You don't have enough ETH.");
-        totalAmount += amount - investors[msg.sender];
-        investors[msg.sender] = amount; 
+        totalAmount += amount - investors[msg.sender].amount;
+        investors[msg.sender].amount = amount; 
+        investors[msg.sender].email = email;
 
-        emit InvestorStatement(msg.sender, amount);
+        emit InvestorStatement(msg.sender, amount, email);
     }
 
-    function getInvestorAmount(address investor) view public returns(uint) {
-        return investors[investor];
+    function announce(uint amount) public { 
+        
+        return announce(amount, "");
+    }
+
+    function getInvestorStatement(address investor) view public returns(uint, string) {
+        return (investors[investor].amount, investors[investor].email);
     }
 
 }

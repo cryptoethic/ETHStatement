@@ -32,8 +32,8 @@ describe('RedditorETH Contract', () => {
   });
 
   it('contract creation', async () => { 
-    expect(contract.options.address).not.to.be.undefined; 
-    expect(await (contract.methods.owner().call())).to.be.equal(deployer);
+    expect(contract.options.address).not.to.be.undefined;  
+    expect(await getTotalAmount()).to.be.eq.BN(0);
   });
 
   it('investor can define amount he wills to invest', async () => {

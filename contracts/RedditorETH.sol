@@ -1,8 +1,6 @@
-pragma solidity ^0.4.24;
+pragma solidity ^0.4.24; 
 
-import "zeppelin-solidity/contracts/ownership/Ownable.sol";
-
-contract RedditorETH is Ownable {
+contract RedditorETH {
 
     /* --- EVENTS --- */
 
@@ -18,11 +16,6 @@ contract RedditorETH is Ownable {
     mapping (address => Investor) public investors;
     uint public totalAmount;
 
-    /* --- CONSTRUCTOR --- */
-
-    constructor() public {
-        
-    }
 
     /* --- PUBLIC / EXTERNAL METHODS --- */
 

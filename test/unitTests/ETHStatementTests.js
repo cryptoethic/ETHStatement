@@ -1,5 +1,5 @@
 import {createWeb3, deployContract, createContract, expectThrow} from '../testUtils.js';
-import redditorETHJson from '../../build/contracts/RedditorETH.json';
+import ETHStatementJson from '../../build/contracts/ETHStatement.json';
 import Web3 from 'web3';
 import chai from 'chai';
 import bnChai from 'bn-chai';
@@ -9,7 +9,7 @@ const web3 = createWeb3(Web3);
 const {BN} = web3.utils;
 chai.use(bnChai(BN));
 
-describe('RedditorETH Contract', () => {
+describe('ETHStatement Contract', () => {
   const oneETH = web3.utils.toWei('1', 'ether');
   const twoETH = web3.utils.toWei('2', 'ether');
   const threeETH = web3.utils.toWei('3', 'ether');
@@ -28,7 +28,7 @@ describe('RedditorETH Contract', () => {
   });
 
   beforeEach(async () => {
-    contract = await deployContract(web3, redditorETHJson, deployer, []); 
+    contract = await deployContract(web3, ETHStatementJson, deployer, []); 
   });
 
   it('contract creation', async () => { 

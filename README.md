@@ -1,4 +1,4 @@
-# ETHStatement.io 
+# ETHStatement.com
 
 This repository contains smart contracts and tests for my DApp.
 
